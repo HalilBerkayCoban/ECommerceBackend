@@ -2,16 +2,25 @@
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 
-//ProductTest();
-CategoryTest();
+ProductTest();
+//CategoryTest();
 
 static void ProductTest()
 {
     ProductManager productManager = new ProductManager(new EfProductDal());
 
-    foreach (var product in productManager.GetByUnitPice(40, 100))
+    var result = productManager.GetProductDetails();
+
+    if (result.Success)
     {
-        Console.WriteLine(product.ProductName);
+        foreach (var product in result.Data)
+        {
+            Console.WriteLine(product.ProductName + " /" + product.CategoryName);
+        }
+    }
+    else
+    {
+        Console.WriteLine(result.Message);
     }
 }
 
